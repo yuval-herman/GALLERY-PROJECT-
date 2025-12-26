@@ -13,8 +13,9 @@ void MemoryAccess::printAlbums()
 	}
 	std::cout << "Album list:" << std::endl;
 	std::cout << "-----------" << std::endl;
+	//added creation time to print
 	for (const Album& album: m_albums) 	{
-		std::cout << std::setw(5) << "* " << album;
+		std::cout << std::setw(5) << "* " << album << " " << album.getCreationDate() << std::endl;
 	}
 }
 
