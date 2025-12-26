@@ -1,5 +1,6 @@
 ﻿#include <map>
 #include <algorithm>
+#include <vector>
 
 #include "ItemNotFoundException.h"
 #include "MemoryAccess.h"
@@ -180,17 +181,24 @@ void MemoryAccess::createUser(User& user)
 	m_users.push_back(user);
 }
 
-void MemoryAccess::deleteUser(const User& user)
-{
-	if (doesUserExists(user.getId())) {
-	
-		for (auto iter = m_users.begin(); iter != m_users.end(); ++iter) {
-			if (*iter == user) {
-				iter = m_users.erase(iter);
-				return;
-			}
-		}
-	}
+void MemoryAccess::deleteUser(const User &user) {
+  if (doesUserExists(user.getId())) {
+
+    for (auto iter = m_users.begin(); iter != m_users.end(); ++iter) {
+      auto albums = getAlbumsOfUser(user);
+      std::vector<std::string> album_names;
+      for (auto album : albums) {
+        album_names.push_back(album.getName());
+      }
+      for (const std::string &album_name : album_names) {
+        deleteAlbum(album_name, user.getId());
+      }
+      if (*iter == user) {
+        iter = m_users.erase(iter);
+        return;
+      }
+    }
+  }
 }
 
 bool MemoryAccess::doesUserExists(int userId) 
