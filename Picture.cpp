@@ -1,6 +1,7 @@
 ﻿#include "Picture.h"
 #include <ctime>
 #include <sstream>
+#include <algorithm>
 
 
 Picture::Picture(int id, const std::string& name): 

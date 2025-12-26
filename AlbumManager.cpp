@@ -1,4 +1,5 @@
 ﻿#include "AlbumManager.h"
+#include <fstream>
 #include <iostream>
 #include "Constants.h"
 #include "MyException.h"
@@ -395,8 +396,8 @@ std::string AlbumManager::getInputFromConsole(const std::string& message)
 
 bool AlbumManager::fileExistsOnDisk(const std::string& filename)
 {
-	struct stat buffer;   
-	return (stat(filename.c_str(), &buffer) == 0); 
+	std::ifstream f(filename.c_str()); 
+	return f.good(); 
 }
 
 void AlbumManager::refreshOpenAlbum() {
